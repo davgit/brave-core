@@ -84,6 +84,7 @@ class PublisherInfoDatabase {
 
   sql::InitStatus EnsureCurrentVersion();
   bool MigrateV1toV2();
+  bool MigrateV2toV3();
 
   sql::Database db_;
   sql::MetaTable meta_table_;
