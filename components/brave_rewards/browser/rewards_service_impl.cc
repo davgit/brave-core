@@ -205,7 +205,7 @@ LoadMediaPublisherInfoListOnFileTaskRunner(
 bool SavePublisherInfoOnFileTaskRunner(
     const ledger::PublisherInfo publisher_info,
     PublisherInfoDatabase* backend) {
-  if (backend && backend->InsertOrUpdatePublisherInfo(publisher_info))
+  if (backend && backend->InsertOrUpdateActivityInfo(publisher_info))
     return true;
 
   return false;
