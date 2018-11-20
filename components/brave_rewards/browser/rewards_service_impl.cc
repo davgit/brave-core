@@ -1889,4 +1889,33 @@ void RewardsServiceImpl::SetLedgerClient(
   ledger_ = std::move(new_ledger);
 }
 
+bool RestorePublisherOnFileTaskRunner(PublisherInfoDatabase* backend) {
+  if (!backend) {
+    return false;
+  }
+
+  return backend->RestorePublishers();
+}
+
+void RewardsServiceImpl::OnRestorePublishers(ledger::OnRestoreCallback callback) {
+  base::PostTaskAndReplyWithResult(
+      file_task_runner_.get(),
+      FROM_HERE,
+      base::Bind(&RestorePublisherOnFileTaskRunner,
+                 publisher_info_backend_.get()),
+      base::Bind(&RewardsServiceImpl::OnRestorePublishersInternal,
+                 AsWeakPtr(),
+                 callback));
+}
+
+void RewardsServiceImpl::OnRestorePublishersInternal(
+    ledger::OnRestoreCallback callback,
+    bool result) {
+  callback(result);
+
+  if (result) {
+    TriggerOnContentSiteUpdated();
+  }
+}
+
 }  // namespace brave_rewards

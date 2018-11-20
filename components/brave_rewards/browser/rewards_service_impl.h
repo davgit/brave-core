@@ -211,6 +211,8 @@ class RewardsServiceImpl : public RewardsService,
       uint64_t windowId);
   void MaybeShowBackupNotification();
   void MaybeShowAddFundsNotification();
+  void OnRestorePublishersInternal(ledger::OnRestoreCallback callback,
+                                   bool result);
 
   // ledger::LedgerClient
   std::string GenerateGUID() const override;
@@ -291,6 +293,7 @@ class RewardsServiceImpl : public RewardsService,
                      const char* file,
                      int line,
                      const ledger::LogLevel log_level) const override;
+  void OnRestorePublishers(ledger::OnRestoreCallback callback) override;
 
   void OnIOTaskComplete(std::function<void(void)> callback);
 
