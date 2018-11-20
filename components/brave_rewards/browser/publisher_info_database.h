@@ -37,7 +37,7 @@ class PublisherInfoDatabase {
   bool InsertContributionInfo(const brave_rewards::ContributionInfo& info);
 
   void GetTips(ledger::PublisherInfoList* list,
-               ledger::PUBLISHER_MONTH month,
+               ledger::ACTIVITY_MONTH month,
                int year);
 
   bool InsertOrUpdatePublisherInfo(const ledger::PublisherInfo& info);
@@ -49,7 +49,7 @@ class PublisherInfoDatabase {
 
   bool GetPublisherActivityList(int start,
                                 int limit,
-                                const ledger::PublisherInfoFilter& filter,
+                                const ledger::ActivityInfoFilter& filter,
                                 ledger::PublisherInfoList* list);
 
   bool InsertOrUpdateMediaPublisherInfo(const std::string& media_key,

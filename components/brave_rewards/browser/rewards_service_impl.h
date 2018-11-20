@@ -194,7 +194,7 @@ class RewardsServiceImpl : public RewardsService,
                                    std::unique_ptr<ledger::PublisherInfo> info);
   void OnDonate(const std::string& publisher_key, int amount, bool recurring,
       const ledger::PublisherInfo* publisher_info = NULL) override;
-  void OnContributionInfoSaved(const ledger::PUBLISHER_CATEGORY category, bool success);
+  void OnContributionInfoSaved(const ledger::REWARDS_CATEGORY category, bool success);
   void OnRecurringDonationSaved(bool success);
   void SaveRecurringDonation(const std::string& publisher_key, const int amount);
   void OnRecurringDonationsData(const ledger::PublisherInfoListCallback callback,
@@ -222,7 +222,7 @@ class RewardsServiceImpl : public RewardsService,
                       const std::vector<ledger::Grant>& grants) override;
   void OnReconcileComplete(ledger::Result result,
                            const std::string& viewing_id,
-                           ledger::PUBLISHER_CATEGORY category,
+                           ledger::REWARDS_CATEGORY category,
                            const std::string& probi) override;
   void OnGrantFinish(ledger::Result result,
                      const ledger::Grant& grant) override;
@@ -237,12 +237,12 @@ class RewardsServiceImpl : public RewardsService,
                          ledger::PublisherInfoCallback callback) override;
   void SaveActivityInfo(std::unique_ptr<ledger::PublisherInfo> publisher_info,
                         ledger::PublisherInfoCallback callback) override;
-  void LoadActivityInfo(ledger::PublisherInfoFilter filter,
+  void LoadActivityInfo(ledger::ActivityInfoFilter filter,
                          ledger::PublisherInfoCallback callback) override;
   void LoadPublisherInfoList(
       uint32_t start,
       uint32_t limit,
-      ledger::PublisherInfoFilter filter,
+      ledger::ActivityInfoFilter filter,
       ledger::PublisherInfoListCallback callback) override;
   void SavePublishersList(const std::string& publishers_list,
                           ledger::LedgerCallbackHandler* handler) override;
@@ -285,7 +285,7 @@ class RewardsServiceImpl : public RewardsService,
                             const int year,
                             const uint32_t date,
                             const std::string& publisher_key,
-                            const ledger::PUBLISHER_CATEGORY category) override;
+                            const ledger::REWARDS_CATEGORY category) override;
   void GetRecurringDonations(ledger::PublisherInfoListCallback callback) override;
   std::unique_ptr<ledger::LogStream> Log(
                      const char* file,
