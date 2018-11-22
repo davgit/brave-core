@@ -20,14 +20,15 @@ declare namespace RewardsExtension {
   }
 
   interface Publisher {
-    excluded: boolean
-    favicon_url: string
-    publisher_key: string
-    name: string
-    percentage: number
-    provider: string
-    url: string
-    verified: boolean
+    excluded?: boolean
+    favicon_url?: string
+    publisher_key?: string
+    name?: string
+    percentage?: number
+    provider?: string
+    tabUrl?: string
+    url?: string
+    verified?: boolean
   }
 
   export interface Grant {

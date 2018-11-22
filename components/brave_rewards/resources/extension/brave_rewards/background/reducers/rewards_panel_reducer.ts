@@ -58,28 +58,37 @@ export const rewardsPanelReducer = (state: RewardsExtension.State | undefined, a
       }
       break
     case types.ON_TAB_RETRIEVED:
-      const tab: chrome.tabs.Tab = payload.tab
-      if (
-        !tab ||
-        !tab.url ||
-        tab.incognito ||
-        !tab.active ||
-        !state.walletCreated
-      ) {
+      {
+        const tab: chrome.tabs.Tab = payload.tab
+        if (
+          !tab ||
+          !tab.url ||
+          tab.incognito ||
+          !tab.active ||
+          !state.walletCreated
+        ) {
+          break
+        }
+
+        const id = getWindowId(tab.windowId)
+        const publishers: Record<string, RewardsExtension.Publisher> = state.publishers
+        const publisher = publishers[id]
+        chrome.braveRewards.getPublisherData(tab.windowId, tab.url, tab.favIconUrl || '')
+        if (!publisher || (publisher && publisher.tabUrl !== tab.url)) {
+          if (publisher) {
+            delete publishers[id]
+          }
+
+          publishers[id] = {
+            tabUrl: tab.url
+          }
+        }
+        state = {
+          ...state,
+          publishers
+        }
         break
       }
-
-      chrome.braveRewards.getPublisherData(tab.windowId, tab.url, tab.favIconUrl || '')
-      const id = getWindowId(tab.windowId)
-      let publishers: Record<string, RewardsExtension.Publisher> = state.publishers
-      if (publishers[id]) {
-        delete publishers[id]
-      }
-      state = {
-        ...state,
-        publishers
-      }
-      break
     case types.ON_PUBLISHER_DATA:
       {
         const publisher = payload.publisher
@@ -89,7 +98,7 @@ export const rewardsPanelReducer = (state: RewardsExtension.State | undefined, a
         if (publisher && !publisher.publisher_key) {
           delete publishers[id]
         } else {
-          publishers[id] = payload.publisher
+          publishers[id] = { ...publishers[id], ...payload.publisher }
         }
 
         state = {

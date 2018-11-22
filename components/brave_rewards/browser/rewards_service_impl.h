@@ -241,6 +241,8 @@ class RewardsServiceImpl : public RewardsService,
                         ledger::PublisherInfoCallback callback) override;
   void LoadActivityInfo(ledger::ActivityInfoFilter filter,
                          ledger::PublisherInfoCallback callback) override;
+  void LoadPanelPublisherInfo(ledger::ActivityInfoFilter filter,
+                              ledger::PublisherInfoCallback callback) override;
   void LoadActivityInfoList(
       uint32_t start,
       uint32_t limit,
@@ -294,6 +296,9 @@ class RewardsServiceImpl : public RewardsService,
                      int line,
                      const ledger::LogLevel log_level) const override;
   void OnRestorePublishers(ledger::OnRestoreCallback callback) override;
+  void OnPanelPublisherInfoLoaded(
+      ledger::PublisherInfoCallback callback,
+      std::unique_ptr<ledger::PublisherInfo> publisher_info);
 
   void OnIOTaskComplete(std::function<void(void)> callback);
 
