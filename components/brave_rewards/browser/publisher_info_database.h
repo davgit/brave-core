@@ -81,6 +81,46 @@ class PublisherInfoDatabase {
   std::string GetDiagnosticInfo(int extended_error, sql::Statement* statement);
 
  private:
+  // private
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+    Init);
+
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+    CreateContributionInfoTable);
+
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+    CreateContributionInfoIndex);
+
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+    CreatePublisherInfoTable);
+
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+    CreateActivityInfoTable);
+
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+    CreateActivityInfoIndex);
+
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+    CreateMediaPublisherInfoTable);
+
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+    CreateRecurringDonationTable);
+
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+    CreateRecurringDonationIndex);
+
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+    GetDB);
+
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+    MigrateV1toV2);
+
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+    MigrateV2toV3);
+
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+    EnsureCurrentVersion);
+
   bool Init();
 
   bool CreateContributionInfoTable();
