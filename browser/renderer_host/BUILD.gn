@@ -2,6 +2,8 @@ source_set("renderer_host") {
   sources = [
     "brave_navigation_ui_data.cc",
     "brave_navigation_ui_data.h",
+    "brave_render_message_filter.cc",
+    "brave_render_message_filter.h",
   ]
 
   deps = [

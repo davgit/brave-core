@@ -75,9 +75,16 @@ bool IsAllowContentSettingWithIOData(ProfileIOData* io_data,
     return GetDefaultFromResourceIdentifier(resource_identifier, primary_url,
                                             secondary_url);
   }
+  return IsAllowContentSetting(io_data->GetHostContentSettingsMap(), primary_url, 
+    secondary_url, setting_type, resource_identifier);
+}
+
+bool IsAllowContentSetting(HostContentSettingsMap* map,
+    const GURL& primary_url, const GURL& secondary_url,
+    ContentSettingsType setting_type,
+    const std::string& resource_identifier) {
   content_settings::SettingInfo setting_info;
-  std::unique_ptr<base::Value> value =
-      io_data->GetHostContentSettingsMap()->GetWebsiteSetting(
+  std::unique_ptr<base::Value> value = map->GetWebsiteSetting(
           primary_url, secondary_url,
           setting_type,
           resource_identifier, &setting_info);

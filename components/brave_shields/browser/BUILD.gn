@@ -19,6 +19,8 @@ source_set("brave_shields") {
     "https_everywhere_recently_used_cache.h",
     "https_everywhere_service.cc",
     "https_everywhere_service.h",
+    "tracking_protection_helper.cc",
+    "tracking_protection_helper.h",
     "tracking_protection_service.cc",
     "tracking_protection_service.h",
   ]
