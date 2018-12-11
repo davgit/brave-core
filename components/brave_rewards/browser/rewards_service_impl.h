@@ -130,6 +130,8 @@ class RewardsServiceImpl : public RewardsService,
   RewardsNotificationService* GetNotificationService() const override;
   bool CheckImported() override;
   void SetBackupCompleted() override;
+  const std::string& GetPaymentId() const override;
+  std::string GetKeyInfoSeed() const override;
 
   static void HandleFlags(const std::string& options);
   void OnWalletProperties(ledger::Result result,

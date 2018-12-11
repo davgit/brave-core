@@ -213,6 +213,9 @@ class MockLedgerClient : public ledger::Ledger {
   MOCK_METHOD0(GetDefaultContributionAmount, double());
 
   MOCK_CONST_METHOD0(GetBootStamp, uint64_t());
+
+  MOCK_CONST_METHOD0(GetPaymentId, const std::string&());
+  MOCK_CONST_METHOD0(GetKeyInfoSeed, std::string());
 };
 
 std::unique_ptr<Profile> CreateBraveRewardsProfile(const base::FilePath& path);

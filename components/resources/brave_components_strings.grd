@@ -253,6 +253,10 @@
       <message name="IDS_BRAVE_REWARDS_LOCAL_WALLET_CORRUPTED" desc="">We detected that something is wrong with your wallet. You must recover your backup wallet before any transactions can be processed.</message>
       <message name="IDS_BRAVE_REWARDS_LOCAL_WALLET_CORRUPTED_NOW" desc="">Recover now!</message>
 
+      <!-- WebUI rewards internals resources -->
+      <message name="IDS_BRAVE_REWARDS_INTERNALS_KEY_INFO_SEED" desc="Key info seed">Key info seed:</message>
+      <message name="IDS_BRAVE_REWARDS_INTERNALS_WALLET_PAYMENT_ID" desc="Wallet payment ID">Wallet Payment ID:</message>
+
       <!-- WebUI brave ui resources -->
       <message name="IDS_BRAVE_UI_ABOUT" desc="">about</message>
       <message name="IDS_BRAVE_UI_ACCEPT" desc="">Accept</message>

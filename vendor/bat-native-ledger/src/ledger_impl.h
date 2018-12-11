@@ -212,7 +212,7 @@ class LedgerImpl : public ledger::Ledger,
       const std::string& viewing_id,
       const braveledger_bat_helper::CURRENT_RECONCILE& reconcile);
 
-  const std::string& GetPaymentId() const;
+  const std::string& GetPaymentId() const override;
   void SetPaymentId(const std::string& payment_id);
   const braveledger_bat_helper::GRANT& GetGrant() const;
   void SetGrant(braveledger_bat_helper::GRANT grant);
@@ -226,6 +226,7 @@ class LedgerImpl : public ledger::Ledger,
   void SetPreFlight(const std::string& pre_flight);
   const braveledger_bat_helper::WALLET_INFO_ST& GetWalletInfo() const;
   void SetWalletInfo(const braveledger_bat_helper::WALLET_INFO_ST& info);
+  std::string GetKeyInfoSeed() const override;
 
   const braveledger_bat_helper::WALLET_PROPERTIES_ST&
   GetWalletProperties() const;

@@ -191,6 +191,9 @@ class LEDGER_EXPORT Ledger {
   virtual double GetDefaultContributionAmount() = 0;
 
   virtual uint64_t GetBootStamp() const = 0;
+
+  virtual const std::string& GetPaymentId() const = 0;
+  virtual std::string GetKeyInfoSeed() const = 0;
 };
 
 }  // namespace ledger

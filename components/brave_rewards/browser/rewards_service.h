@@ -114,6 +114,8 @@ class RewardsService : public KeyedService {
   virtual bool CheckImported() = 0;
   virtual void SetLedgerClient(std::unique_ptr<ledger::Ledger> new_ledger) = 0;
   virtual void SetBackupCompleted() = 0;
+  virtual const std::string& GetPaymentId() const = 0;
+  virtual std::string GetKeyInfoSeed() const = 0;
 
   void AddObserver(RewardsServiceObserver* observer);
   void RemoveObserver(RewardsServiceObserver* observer);

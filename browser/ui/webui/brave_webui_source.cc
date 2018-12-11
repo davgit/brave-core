@@ -535,6 +535,11 @@ void CustomizeWebUIHTMLSource(const std::string &name, content::WebUIDataSource*
         { "walletBalance", IDS_BRAVE_UI_WALLET_BALANCE },
         { "welcome", IDS_BRAVE_UI_WELCOME },
       }
+    }, {
+      std::string("rewards-internals"), {
+        { "keyInfoSeed", IDS_BRAVE_REWARDS_INTERNALS_KEY_INFO_SEED },
+        { "walletPaymentId", IDS_BRAVE_REWARDS_INTERNALS_WALLET_PAYMENT_ID },
+      }
     }
   };
   AddLocalizedStringsBulk(source, localized_strings[name]);
