@@ -1,0 +1,13 @@
+diff --git a/chrome/browser/ui/webui/extensions/extensions_ui.cc b/chrome/browser/ui/webui/extensions/extensions_ui.cc
+index 393653d66928e306bfdf479d6e0fd194655e783c..b49cad07f1032c4df8d498893d6466542b00547a 100644
+--- a/chrome/browser/ui/webui/extensions/extensions_ui.cc
++++ b/chrome/browser/ui/webui/extensions/extensions_ui.cc
+@@ -277,6 +277,8 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
+   AddLocalizedStringsBulk(source, localized_strings,
+                           base::size(localized_strings));
+ 
++  BraveAddLocalizedStrings(source);
++
+   source->AddString("errorLinesNotShownSingular",
+                     l10n_util::GetPluralStringFUTF16(
+                         IDS_MD_EXTENSIONS_ERROR_LINES_NOT_SHOWN, 1));
