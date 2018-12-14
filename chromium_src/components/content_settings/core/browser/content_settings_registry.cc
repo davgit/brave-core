@@ -28,7 +28,7 @@ void ContentSettingsRegistry::BraveInit() {
                     CONTENT_SETTING_DETECT_IMPORTANT_CONTENT),
       WebsiteSettingsInfo::SINGLE_ORIGIN_WITH_EMBEDDED_EXCEPTIONS_SCOPE,
       WebsiteSettingsRegistry::DESKTOP,
-      ContentSettingsInfo::INHERIT_IF_LESS_PERMISSIVE,
+      ContentSettingsInfo::INHERIT_IN_INCOGNITO,
       ContentSettingsInfo::EPHEMERAL);
 }
 
