@@ -23,7 +23,7 @@ VisitData::VisitData(const std::string& _tld,
             const std::string& _domain,
             const std::string& _path,
             uint32_t _tab_id,
-            PUBLISHER_MONTH _local_month,
+            ACTIVITY_MONTH _local_month,
             int _local_year,
             const std::string& _name,
             const std::string& _url,
@@ -58,13 +58,13 @@ VisitData::~VisitData() {}
 PaymentData::PaymentData():
   value(0),
   timestamp(0),
-  category(PUBLISHER_CATEGORY::TIPPING) {}
+  category(REWARDS_CATEGORY::TIPPING) {}
 
 PaymentData::PaymentData(const std::string& _publisher_id,
          const double& _value,
          const int64_t& _timestamp,
-         PUBLISHER_CATEGORY _category,
-         PUBLISHER_MONTH _local_month,
+         REWARDS_CATEGORY _category,
+         ACTIVITY_MONTH _local_month,
          int _local_year):
   publisher_id(_publisher_id),
   value(_value),
@@ -83,16 +83,21 @@ PaymentData::PaymentData(const PaymentData& data):
 
 PaymentData::~PaymentData() {}
 
-PublisherInfoFilter::PublisherInfoFilter() :
-    category(PUBLISHER_CATEGORY::ALL_CATEGORIES),
-    month(PUBLISHER_MONTH::ANY),
+ActivityInfoFilter::ActivityInfoFilter() :
+    category(REWARDS_CATEGORY::ALL_CATEGORIES),
+    month(ACTIVITY_MONTH::ANY),
     year(-1),
-    excluded(PUBLISHER_EXCLUDE_FILTER::FILTER_DEFAULT),
+    excluded(EXCLUDE_FILTER::FILTER_DEFAULT),
     percent(0),
     min_duration(0),
+<<<<<<< HEAD
     reconcile_stamp(0),
     non_verified(true) {}
 PublisherInfoFilter::PublisherInfoFilter(const PublisherInfoFilter& filter) :
+=======
+    reconcile_stamp(0) {}
+ActivityInfoFilter::ActivityInfoFilter(const ActivityInfoFilter& filter) :
+>>>>>>> Ports ledger cahnges from seperate repo into core
     id(filter.id),
     category(filter.category),
     month(filter.month),
@@ -101,9 +106,14 @@ PublisherInfoFilter::PublisherInfoFilter(const PublisherInfoFilter& filter) :
     percent(filter.percent),
     order_by(filter.order_by),
     min_duration(filter.min_duration),
+<<<<<<< HEAD
     reconcile_stamp(filter.reconcile_stamp),
     non_verified(filter.non_verified) {}
 PublisherInfoFilter::~PublisherInfoFilter() {}
+=======
+    reconcile_stamp(filter.reconcile_stamp) {}
+ActivityInfoFilter::~ActivityInfoFilter() {}
+>>>>>>> Ports ledger cahnges from seperate repo into core
 
 PublisherBanner::PublisherBanner() {}
 
@@ -127,8 +137,8 @@ PublisherInfo::PublisherInfo() :
     percent(0u),
     weight(.0),
     excluded(PUBLISHER_EXCLUDE::DEFAULT),
-    category(PUBLISHER_CATEGORY::AUTO_CONTRIBUTE),
-    month(PUBLISHER_MONTH::ANY),
+    category(REWARDS_CATEGORY::AUTO_CONTRIBUTE),
+    month(ACTIVITY_MONTH::ANY),
     year(-1),
     reconcile_stamp(0),
     verified(false),
@@ -138,7 +148,7 @@ PublisherInfo::PublisherInfo() :
     favicon_url("") {}
 
 PublisherInfo::PublisherInfo(const std::string& publisher_id,
-                             PUBLISHER_MONTH _month,
+                             ACTIVITY_MONTH _month,
                              int _year) :
     id(publisher_id),
     duration(0u),
@@ -147,7 +157,7 @@ PublisherInfo::PublisherInfo(const std::string& publisher_id,
     percent(0u),
     weight(.0),
     excluded(PUBLISHER_EXCLUDE::DEFAULT),
-    category(PUBLISHER_CATEGORY::AUTO_CONTRIBUTE),
+    category(REWARDS_CATEGORY::AUTO_CONTRIBUTE),
     month(_month),
     year(_year),
     reconcile_stamp(0),
@@ -183,10 +193,10 @@ bool PublisherInfo::operator<(const PublisherInfo& rhs) const {
   }
 
 bool PublisherInfo::is_valid() const {
-  return !id.empty() && year > 0 && month != PUBLISHER_MONTH::ANY;
+  return !id.empty() && year > 0 && month != ACTIVITY_MONTH::ANY;
 }
 
-const PublisherInfo invalid("", PUBLISHER_MONTH::ANY, -1);
+const PublisherInfo invalid("", ACTIVITY_MONTH::ANY, -1);
 
 
 TwitchEventInfo::TwitchEventInfo() {}
