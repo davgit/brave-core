@@ -12,9 +12,10 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "sql/database.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-// npm run test -- brave_unit_tests --PublisherInfoDatabaseTest.*
+// npm run test -- brave_unit_tests --filter=PublisherInfoDatabaseTest.*
 
 namespace brave_rewards {
 
@@ -46,9 +47,7 @@ class PublisherInfoDatabaseTest : public ::testing::Test {
 
     publisher_info_database_ = std::make_unique<PublisherInfoDatabase>(db_file);
     ASSERT_TRUE(publisher_info_database_);
-
-    db_ = publisher_info_database_->GetDB();
-    ASSERT_TRUE(db_);
+    ASSERT_TRUE(GetDB());
   }
 
   void TearDown() override {
@@ -63,133 +62,84 @@ class PublisherInfoDatabaseTest : public ::testing::Test {
     return path.value();
   }
 
-  std::unique_ptr<PublisherInfoDatabase> publisher_info_database_;
+  sql::Database& GetDB() {
+    return publisher_info_database_->GetDB();
+  }
 
-  sql::Database db_;
+  std::unique_ptr<PublisherInfoDatabase> publisher_info_database_;
 };
 
-TEST_F(PublisherInfoDatabaseTest, InsertContributionInfoTest) {
+TEST_F(PublisherInfoDatabaseTest, InsertContributionInfo) {
   ContributionInfo info;
   info.probi = "12345678901234567890123456789012345678901234";
   info.month = ledger::ACTIVITY_MONTH::JANUARY;
   info.year = 1970;
   info.category = ledger::REWARDS_CATEGORY::AUTO_CONTRIBUTE;
-  info.date = base::Time::UnixEpoch();
+  info.date = base::Time::Now().ToJsTime();
   info.publisher_key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   bool success = publisher_info_database_->InsertContributionInfo(info);
   EXPECT_TRUE(success);
 
-  sql::Statement info_sql(db_.GetUniqueStatement(
-    "SELECT publisher_id FROM publisher_info WHERE publisher_id=?"));
+  std::string query = "SELECT * FROM contribution_info WHERE publisher_id=?";
+  sql::Statement info_sql(GetDB().GetUniqueStatement(query.c_str()));
 
   info_sql.BindString(0, info.publisher_key);
 
   EXPECT_TRUE(info_sql.Step());
+//  EXPECT_EQ(info_sql.ColumnString(0), info.publisher_key);
+//  EXPECT_EQ(info_sql.ColumnString(1), info.probi);
+//  EXPECT_EQ(info_sql.ColumnInt64(2), info.date);
+//  EXPECT_EQ(info_sql.ColumnInt(3), info.category);
+//  EXPECT_EQ(info_sql.ColumnInt(4), info.month);
+//  EXPECT_EQ(info_sql.ColumnInt(5), info.year);
 }
 
-TEST_F(PublisherInfoDatabaseTest, GetTipsTest) {
+TEST_F(PublisherInfoDatabaseTest, GetTips) {
   EXPECT_TRUE(false);
 }
 
-TEST_F(PublisherInfoDatabaseTest, InsertOrUpdatePublisherInfoTest) {
+TEST_F(PublisherInfoDatabaseTest, InsertOrUpdatePublisherInfo) {
   EXPECT_TRUE(false);
 }
 
-TEST_F(PublisherInfoDatabaseTest, GetPublisherInfoTest) {
+TEST_F(PublisherInfoDatabaseTest, GetPublisherInfo) {
   EXPECT_TRUE(false);
 }
 
-TEST_F(PublisherInfoDatabaseTest, GetPanelPublisherTest) {
+TEST_F(PublisherInfoDatabaseTest, GetPanelPublisher) {
   EXPECT_TRUE(false);
 }
 
-TEST_F(PublisherInfoDatabaseTest, RestorePublishersTest) {
+TEST_F(PublisherInfoDatabaseTest, RestorePublishers) {
   EXPECT_TRUE(false);
 }
 
-TEST_F(PublisherInfoDatabaseTest, InsertOrUpdateActivityInfoTest) {
+TEST_F(PublisherInfoDatabaseTest, InsertOrUpdateActivityInfo) {
   EXPECT_TRUE(false);
 }
 
-TEST_F(PublisherInfoDatabaseTest, GetActivityListTest) {
+TEST_F(PublisherInfoDatabaseTest, GetActivityList) {
   EXPECT_TRUE(false);
 }
 
-TEST_F(PublisherInfoDatabaseTest, InsertOrUpdateMediaPublisherInfoTest) {
+TEST_F(PublisherInfoDatabaseTest, InsertOrUpdateMediaPublisherInfo) {
   EXPECT_TRUE(false);
 }
 
-TEST_F(PublisherInfoDatabaseTest, GetMediaPublisherInfoTest) {
+TEST_F(PublisherInfoDatabaseTest, GetMediaPublisherInfo) {
   EXPECT_TRUE(false);
 }
 
-TEST_F(PublisherInfoDatabaseTest, InsertOrUpdateRecurringDonationTest) {
+TEST_F(PublisherInfoDatabaseTest, InsertOrUpdateRecurringDonation) {
   EXPECT_TRUE(false);
 }
 
-TEST_F(PublisherInfoDatabaseTest, GetRecurringDonationsTest) {
+TEST_F(PublisherInfoDatabaseTest, GetRecurringDonations) {
   EXPECT_TRUE(false);
 }
 
-TEST_F(PublisherInfoDatabaseTest, RemoveRecurringTest) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, GetCurrentVersionTest) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, VacuumTest) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, GetDiagnosticInfoTest) {
-  EXPECT_TRUE(false);
-}
-
-// private
-TEST_F(PublisherInfoDatabaseTest, CreateContributionInfoTableTest) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, CreateContributionInfoIndexTest) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, CreatePublisherInfoTableTest) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, CreateActivityInfoTableTest) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, CreateActivityInfoIndexTest) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, CreateMediaPublisherInfoTableTest) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, CreateRecurringDonationTableTest) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, CreateRecurringDonationIndexTest) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, MigrateV1toV2Test) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, MigrateV2toV3Test) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, EnsureCurrentVersion) {
+TEST_F(PublisherInfoDatabaseTest, RemoveRecurring) {
   EXPECT_TRUE(false);
 }
 
