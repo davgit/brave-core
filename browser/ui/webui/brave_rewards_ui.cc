@@ -65,7 +65,7 @@ class RewardsDOMHandler : public WebUIMessageHandler,
   void GetReconcileStamp(const base::ListValue* args);
   void GetAddresses(const base::ListValue* args);
   void SaveSetting(const base::ListValue* args);
-  void OnGetCurrentContributeList(
+  void OnContentSiteList(
       std::unique_ptr<brave_rewards::ContentSiteList>,
       uint32_t record);
   void GetBalanceReports(const base::ListValue* args);
@@ -482,10 +482,10 @@ void RewardsDOMHandler::GetAddresses(const base::ListValue* args) {
 }
 
 void RewardsDOMHandler::OnContentSiteUpdated(brave_rewards::RewardsService* rewards_service) {
-  rewards_service_->GetCurrentContributeList(
+  rewards_service_->GetContentSiteList(
       0,
       0,
-      base::Bind(&RewardsDOMHandler::OnGetCurrentContributeList,
+      base::Bind(&RewardsDOMHandler::OnContentSiteList,
                  weak_factory_.GetWeakPtr()));
 }
 
@@ -582,7 +582,7 @@ void RewardsDOMHandler::RestorePublishers(const base::ListValue *args) {
   }
 }
 
-void RewardsDOMHandler::OnGetCurrentContributeList(
+void RewardsDOMHandler::OnContentSiteList(
     std::unique_ptr<brave_rewards::ContentSiteList> list,
     uint32_t record) {
   if (web_ui()->CanCallJavascript()) {

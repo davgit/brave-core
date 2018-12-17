@@ -268,7 +268,7 @@ void PostWriteCallback(
 void GetContentSiteListInternal(
     uint32_t start,
     uint32_t limit,
-    const GetCurrentContributeListCallback& callback,
+    const GetContentSiteListCallback& callback,
     const ledger::PublisherInfoList& publisher_list,
     uint32_t next_record) {
   std::unique_ptr<ContentSiteList> site_list(new ContentSiteList);
@@ -421,7 +421,7 @@ void RewardsServiceImpl::GetContentSiteList(
     uint32_t start, uint32_t limit,
     const GetContentSiteListCallback& callback) {
   ledger::ActivityInfoFilter filter;
-  filter.month = ledger::PUBLISHER_MONTH::ANY;
+  filter.month = ledger::ACTIVITY_MONTH::ANY;
   filter.year = -1;
   filter.min_duration = ledger_->GetPublisherMinVisitTime();
   filter.order_by.push_back(std::pair<std::string, bool>("ai.percent", false));
@@ -436,7 +436,9 @@ void RewardsServiceImpl::GetContentSiteList(
       std::bind(&GetContentSiteListInternal,
                 start,
                 limit,
-                callback, _1, _2));
+                callback,
+                _1,
+                _2));
 }
 
 void RewardsServiceImpl::OnLoad(SessionID tab_id, const GURL& url) {

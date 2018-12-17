@@ -90,14 +90,9 @@ ActivityInfoFilter::ActivityInfoFilter() :
     excluded(EXCLUDE_FILTER::FILTER_DEFAULT),
     percent(0),
     min_duration(0),
-<<<<<<< HEAD
     reconcile_stamp(0),
     non_verified(true) {}
-PublisherInfoFilter::PublisherInfoFilter(const PublisherInfoFilter& filter) :
-=======
-    reconcile_stamp(0) {}
 ActivityInfoFilter::ActivityInfoFilter(const ActivityInfoFilter& filter) :
->>>>>>> Ports ledger cahnges from seperate repo into core
     id(filter.id),
     category(filter.category),
     month(filter.month),
@@ -106,14 +101,9 @@ ActivityInfoFilter::ActivityInfoFilter(const ActivityInfoFilter& filter) :
     percent(filter.percent),
     order_by(filter.order_by),
     min_duration(filter.min_duration),
-<<<<<<< HEAD
     reconcile_stamp(filter.reconcile_stamp),
     non_verified(filter.non_verified) {}
-PublisherInfoFilter::~PublisherInfoFilter() {}
-=======
-    reconcile_stamp(filter.reconcile_stamp) {}
 ActivityInfoFilter::~ActivityInfoFilter() {}
->>>>>>> Ports ledger cahnges from seperate repo into core
 
 PublisherBanner::PublisherBanner() {}
 

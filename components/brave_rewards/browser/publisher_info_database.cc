@@ -506,11 +506,11 @@ bool PublisherInfoDatabase::GetActivityList(
   }
 
   if (filter.percent > 0) {
-    clauses += " AND ai.percent >= ?";
+    query += " AND ai.percent >= ?";
   }
 
   if (!filter.non_verified) {
-    clauses += " AND pi.verified = 1";
+    query += " AND pi.verified = 1";
   }
 
   for (const auto& it : filter.order_by) {

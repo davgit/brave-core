@@ -71,7 +71,7 @@ class PublisherInfoDatabaseTest : public ::testing::Test {
 TEST_F(PublisherInfoDatabaseTest, InsertContributionInfoTest) {
   ContributionInfo info;
   info.probi = "12345678901234567890123456789012345678901234";
-  info.month = ledger::PUBLISHER_MONTH::JANUARY;
+  info.month = ledger::ACTIVITY_MONTH::JANUARY;
   info.year = 1970;
   info.category = ledger::REWARDS_CATEGORY::AUTO_CONTRIBUTE;
   info.date = base::Time::UnixEpoch();
