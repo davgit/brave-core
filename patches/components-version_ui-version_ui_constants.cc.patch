@@ -1,0 +1,11 @@
+diff --git a/components/version_ui/version_ui_constants.cc b/components/version_ui/version_ui_constants.cc
+index 8d1a9bde9079c0ae183d5b68e557538502a4cd34..8379431b576404b390e3b5c4ee91fd141919b251 100644
+--- a/components/version_ui/version_ui_constants.cc
++++ b/components/version_ui/version_ui_constants.cc
+@@ -75,5 +75,6 @@ const char kVariationsShowCmdQuery[] = "show-variations-cmd";
+ const char kVersion[] = "version";
+ const char kVersionBitSize[] = "version_bitsize";
+ const char kVersionModifier[] = "version_modifier";
++const char kBraveRewardsDetails[] = "brave_rewards_details";
+ 
+ }  // namespace version_ui

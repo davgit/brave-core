@@ -1,0 +1,12 @@
+diff --git a/components/version_ui/version_ui_constants.h b/components/version_ui/version_ui_constants.h
+index 5d5d8a8a6cc15a053aaa19e6b83c7a5b4e4a5f4c..7d3c893323bad45ff86fbdd65b5b72eba58f5c3c 100644
+--- a/components/version_ui/version_ui_constants.h
++++ b/components/version_ui/version_ui_constants.h
+@@ -81,6 +81,7 @@ extern const char kVariationsShowCmdQuery[];
+ extern const char kVersion[];
+ extern const char kVersionBitSize[];
+ extern const char kVersionModifier[];
++extern const char kBraveRewardsDetails[];
+ 
+ }  // namespace version_ui
+ 
