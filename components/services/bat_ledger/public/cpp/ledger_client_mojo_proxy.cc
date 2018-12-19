@@ -61,19 +61,16 @@ void LedgerClientMojoProxy::CallbackHolder<
 }
 
 void LedgerClientMojoProxy::LoadLedgerState(LoadLedgerStateCallback callback) {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   auto* holder = new CallbackHolder<LoadLedgerStateCallback>(AsWeakPtr(),
       std::move(callback));
   ledger_client_->LoadLedgerState(holder);
 }
 
 void LedgerClientMojoProxy::GenerateGUID(GenerateGUIDCallback callback) {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   std::move(callback).Run(ledger_client_->GenerateGUID());
 }
 
 void LedgerClientMojoProxy::OnWalletInitialized(int32_t result) {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   ledger_client_->OnWalletInitialized(ToLedgerResult(result));
 }
 
@@ -109,7 +106,6 @@ void LedgerClientMojoProxy::CallbackHolder<
 
 void LedgerClientMojoProxy::LoadPublisherList(
     LoadPublisherListCallback callback) {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   auto* holder = new CallbackHolder<LoadPublisherListCallback>(
       AsWeakPtr(), std::move(callback));
   ledger_client_->LoadPublisherList(holder);
@@ -132,7 +128,6 @@ void LedgerClientMojoProxy::CallbackHolder<
 
 void LedgerClientMojoProxy::SaveLedgerState(
     const std::string& ledger_state, SaveLedgerStateCallback callback) {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   auto* holder = new CallbackHolder<SaveLedgerStateCallback>(
       AsWeakPtr(), std::move(callback));
   ledger_client_->SaveLedgerState(ledger_state, holder);
@@ -148,7 +143,6 @@ template <>
 void LedgerClientMojoProxy::CallbackHolder<
   LedgerClientMojoProxy::SaveLedgerStateCallback>::OnLedgerStateSaved(
     ledger::Result result) {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   if (is_valid())
     std::move(callback_).Run(ToMojomResult(result));
   delete this;
@@ -156,7 +150,6 @@ void LedgerClientMojoProxy::CallbackHolder<
 
 void LedgerClientMojoProxy::SavePublisherState(
     const std::string& publisher_state, SavePublisherStateCallback callback) {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   auto* holder = new CallbackHolder<SavePublisherStateCallback>(
       AsWeakPtr(), std::move(callback));
   ledger_client_->SavePublisherState(publisher_state, holder);
@@ -172,7 +165,6 @@ template <>
 void LedgerClientMojoProxy::CallbackHolder<
   LedgerClientMojoProxy::SavePublisherStateCallback>::OnPublisherStateSaved(
     ledger::Result result) {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   if (is_valid())
     std::move(callback_).Run(ToMojomResult(result));
   delete this;
@@ -180,7 +172,6 @@ void LedgerClientMojoProxy::CallbackHolder<
 
 void LedgerClientMojoProxy::SavePublishersList(
     const std::string& publishers_list, SavePublishersListCallback callback) {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   auto* holder = new CallbackHolder<SavePublishersListCallback>(
       AsWeakPtr(), std::move(callback));
   ledger_client_->SavePublishersList(publishers_list, holder);
@@ -196,7 +187,6 @@ template <>
 void LedgerClientMojoProxy::CallbackHolder<
   LedgerClientMojoProxy::SavePublishersListCallback>::OnPublishersListSaved(
     ledger::Result result) {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   if (is_valid())
     std::move(callback_).Run(ToMojomResult(result));
   delete this;

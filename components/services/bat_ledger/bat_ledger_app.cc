@@ -28,7 +28,6 @@ BatLedgerApp::~BatLedgerApp() {}
 // static
 std::unique_ptr<service_manager::Service>
 BatLedgerApp::CreateService() {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   return std::make_unique<BatLedgerApp>();
 }
 

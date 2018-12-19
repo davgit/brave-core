@@ -22,7 +22,6 @@ BatLedgerServiceImpl::~BatLedgerServiceImpl() {
 void BatLedgerServiceImpl::Create(
     mojom::BatLedgerClientAssociatedPtrInfo client_info,
     mojom::BatLedgerAssociatedRequest bat_ledger) {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   mojo::MakeStrongAssociatedBinding(
       std::make_unique<BatLedgerImpl>(std::move(client_info)),
                                       std::move(bat_ledger));

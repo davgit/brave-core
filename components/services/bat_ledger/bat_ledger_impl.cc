@@ -44,17 +44,14 @@ BatLedgerImpl::~BatLedgerImpl() {
 }
 
 void BatLedgerImpl::Initialize() {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   ledger_->Initialize();
 }
 
 void BatLedgerImpl::CreateWallet() {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   ledger_->CreateWallet();
 }
 
 void BatLedgerImpl::FetchWalletProperties() {
-  LOG(ERROR) << __PRETTY_FUNCTION__;
   ledger_->FetchWalletProperties();
 }
 
