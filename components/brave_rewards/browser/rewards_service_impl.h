@@ -89,6 +89,7 @@ class RewardsServiceImpl : public RewardsService,
       uint32_t limit,
       uint64_t min_visit_time,
       uint64_t reconcile_stamp,
+      bool allow_non_verified,
       const GetCurrentContributeListCallback& callback) override;
   void OnLoad(SessionID tab_id, const GURL& url) override;
   void OnUnload(SessionID tab_id) override;

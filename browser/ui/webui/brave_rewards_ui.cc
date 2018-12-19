@@ -536,6 +536,7 @@ void RewardsDOMHandler::OnAutoContributePropsReady(
     std::unique_ptr<brave_rewards::AutoContributeProps> props) {
   rewards_service_->GetCurrentContributeList(0, 0,
       props->contribution_min_time, props->reconcile_stamp,
+      props->contribution_non_verified,
       base::Bind(&RewardsDOMHandler::OnGetCurrentContributeList,
         weak_factory_.GetWeakPtr()));
 }

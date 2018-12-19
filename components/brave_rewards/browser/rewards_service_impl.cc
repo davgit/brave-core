@@ -390,6 +390,7 @@ void RewardsServiceImpl::GetCurrentContributeList(
     uint32_t limit,
     uint64_t min_visit_time,
     uint64_t reconcile_stamp,
+    bool allow_non_verified,
     const GetCurrentContributeListCallback& callback) {
   ledger::PublisherInfoFilter filter;
   filter.category = ledger::PUBLISHER_CATEGORY::AUTO_CONTRIBUTE;
@@ -401,7 +402,7 @@ void RewardsServiceImpl::GetCurrentContributeList(
   filter.excluded =
     ledger::PUBLISHER_EXCLUDE_FILTER::FILTER_ALL_EXCEPT_EXCLUDED;
   filter.percent = 1;
-  filter.non_verified = ledger_->GetPublisherAllowNonVerified();
+  filter.non_verified = allow_non_verified;
 
   bat_ledger_->GetPublisherInfoList(start, limit,
       filter.ToJson(),

@@ -70,6 +70,7 @@ class RewardsService : public KeyedService {
       uint32_t limit,
       uint64_t min_visit_time,
       uint64_t reconcile_stamp,
+      bool allow_non_verified,
       const GetCurrentContributeListCallback& callback) = 0;
   virtual void FetchGrant(const std::string& lang, const std::string& paymentId) = 0;
   virtual void GetGrantCaptcha() = 0;
