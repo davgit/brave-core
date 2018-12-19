@@ -349,4 +349,13 @@ void BatLedgerImpl::SetPublisherPanelExclude(const std::string& publisher_key,
       ToLedgerPublisherExclude(exclude), window_id);
 }
 
+void BatLedgerImpl::GetBootStamp(GetBootStampCallback callback) {
+  std::move(callback).Run(ledger_->GetBootStamp());
+}
+
+void BatLedgerImpl::GetRewardsMainEnabled(
+    GetRewardsMainEnabledCallback callback) {
+  std::move(callback).Run(ledger_->GetRewardsMainEnabled());
+}
+
 } // namespace bat_ledger

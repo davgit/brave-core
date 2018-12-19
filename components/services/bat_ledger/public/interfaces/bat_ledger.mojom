@@ -86,6 +86,8 @@ interface BatLedger {
   RemoveRecurring(string publisher_key);
   SetPublisherPanelExclude(string publisher_key, int32 exclude,
       uint64 window_id);
+  GetBootStamp() => (uint64 boot_stamp);
+  GetRewardsMainEnabled() => (bool main_enabled);
 };
 
 interface BatLedgerClient {

@@ -210,7 +210,7 @@ class RewardsServiceImpl : public RewardsService,
       ledger::Result result,
       std::unique_ptr<ledger::PublisherInfo> info,
       uint64_t windowId);
-  void MaybeShowBackupNotification();
+  void MaybeShowBackupNotification(uint64_t boot_stamp);
 
   // ledger::LedgerClient
   std::string GenerateGUID() const override;
@@ -292,7 +292,7 @@ class RewardsServiceImpl : public RewardsService,
   // URLFetcherDelegate impl
   void OnURLFetchComplete(const net::URLFetcher* source) override;
 
-  void StartNotificationTimers();
+  void StartNotificationTimers(bool main_enabled);
   void StopNotificationTimers();
   void OnNotificationTimerFired();
 
