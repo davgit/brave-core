@@ -12,6 +12,9 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "sql/database.h"
+#include "sql/statement.h"
+#include "sql/transaction.h"
+#include "third_party/sqlite/sqlite3.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -46,8 +49,8 @@ class PublisherInfoDatabaseTest : public ::testing::Test {
       temp_dir_.GetPath().AppendASCII("PublisherInfoDatabaseTest.db");
 
     publisher_info_database_ = std::make_unique<PublisherInfoDatabase>(db_file);
-    ASSERT_TRUE(publisher_info_database_);
-    ASSERT_TRUE(GetDB());
+    ASSERT_NE(publisher_info_database_, nullptr);
+    ASSERT_EQ(GetDB().GetErrorCode(), SQLITE_OK);
   }
 
   void TearDown() override {
@@ -87,60 +90,12 @@ TEST_F(PublisherInfoDatabaseTest, InsertContributionInfo) {
   info_sql.BindString(0, info.publisher_key);
 
   EXPECT_TRUE(info_sql.Step());
-//  EXPECT_EQ(info_sql.ColumnString(0), info.publisher_key);
-//  EXPECT_EQ(info_sql.ColumnString(1), info.probi);
-//  EXPECT_EQ(info_sql.ColumnInt64(2), info.date);
-//  EXPECT_EQ(info_sql.ColumnInt(3), info.category);
-//  EXPECT_EQ(info_sql.ColumnInt(4), info.month);
-//  EXPECT_EQ(info_sql.ColumnInt(5), info.year);
-}
-
-TEST_F(PublisherInfoDatabaseTest, GetTips) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, InsertOrUpdatePublisherInfo) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, GetPublisherInfo) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, GetPanelPublisher) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, RestorePublishers) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, InsertOrUpdateActivityInfo) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, GetActivityList) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, InsertOrUpdateMediaPublisherInfo) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, GetMediaPublisherInfo) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, InsertOrUpdateRecurringDonation) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, GetRecurringDonations) {
-  EXPECT_TRUE(false);
-}
-
-TEST_F(PublisherInfoDatabaseTest, RemoveRecurring) {
-  EXPECT_TRUE(false);
+  EXPECT_EQ(info_sql.ColumnString(0), info.publisher_key);
+  EXPECT_EQ(info_sql.ColumnString(1), info.probi);
+  EXPECT_EQ(info_sql.ColumnInt64(2), info.date);
+  EXPECT_EQ(info_sql.ColumnInt(3), info.category);
+  EXPECT_EQ(info_sql.ColumnInt(4), info.month);
+  EXPECT_EQ(info_sql.ColumnInt(5), info.year);
 }
 
 }  // namespace brave_rewards

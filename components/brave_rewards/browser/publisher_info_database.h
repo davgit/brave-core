@@ -80,18 +80,13 @@ class PublisherInfoDatabase {
 
   std::string GetDiagnosticInfo(int extended_error, sql::Statement* statement);
 
-   bool Init();
-
-   sql::Database& GetDB();
+  sql::Database& GetDB();
 
  private:
-//  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
-//    Init);
-//
-//  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
-//    GetDB);
+  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
+      Init);
 
-
+  bool Init();
 
   bool CreateContributionInfoTable();
 

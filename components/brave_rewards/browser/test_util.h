@@ -80,15 +80,28 @@ class MockLedgerClient : public ledger::Ledger {
       void(std::unique_ptr<ledger::PublisherInfo> publisher_info,
            ledger::PublisherInfoCallback callback));
 
-  MOCK_METHOD2(GetPublisherInfo, void(const ledger::ActivityInfoFilter& filter,
+  MOCK_METHOD2(SetActivityInfo,
+      void(std::unique_ptr<ledger::PublisherInfo> publisher_info,
+           ledger::PublisherInfoCallback callback));
+
+  MOCK_METHOD2(GetPublisherInfo, void(const std::string& publisher_key,
                                       ledger::PublisherInfoCallback callback));
 
+  MOCK_METHOD2(GetActivityInfo, void(const ledger::ActivityInfoFilter& filter,
+                                      ledger::PublisherInfoCallback callback));
+ 
   MOCK_METHOD2(SetMediaPublisherInfo, void(const std::string& media_key,
                                            const std::string& publisher_id));
 
   MOCK_METHOD2(GetMediaPublisherInfo, void(
       const std::string& media_key,
       ledger::PublisherInfoCallback callback));
+
+  MOCK_METHOD4(GetActivityInfoList, void(
+      uint32_t start,
+      uint32_t limit,
+      const ledger::ActivityInfoFilter &filter,
+      ledger::PublisherInfoListCallback callback));
 
   MOCK_METHOD0(GetRecurringDonationPublisherInfo,
                std::vector<ledger::ContributionInfo>());
