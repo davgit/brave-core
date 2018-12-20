@@ -2622,6 +2622,9 @@ static bool ignore_ = false;
     writer.String("excluded");
     writer.Int(info.excluded);
 
+    writer.String("percent");
+    writer.Uint(info.percent);
+
     writer.String("min_duration");
     writer.Uint64(info.min_duration);
 
@@ -2635,6 +2638,9 @@ static bool ignore_ = false;
       writer.Bool(i.second);
     }
     writer.EndObject();
+
+    writer.String("non_verified");
+    writer.Bool(info.non_verified);
 
     writer.EndObject();
   }
@@ -2679,7 +2685,7 @@ static bool ignore_ = false;
     writer.String("parameters_days_");
     writer.Uint(info.parameters_days_);
 
-    writer.String("grants");
+    writer.String("grants_");
     writer.StartArray();
     for (const auto& grant : info.grants_) {
       saveToJson(writer, grant);

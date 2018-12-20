@@ -76,8 +76,11 @@ void LedgerClientMojoProxy::OnWalletInitialized(int32_t result) {
 
 void LedgerClientMojoProxy::OnWalletProperties(int32_t result,
     const std::string& info) {
-  auto wallet_info = std::make_unique<ledger::WalletInfo>();
-  wallet_info->loadFromJson(info);
+  std::unique_ptr<ledger::WalletInfo> wallet_info;
+  if (!info.empty()) {
+    wallet_info.reset(new ledger::WalletInfo());
+    wallet_info->loadFromJson(info);
+  }
   ledger_client_->OnWalletProperties(ToLedgerResult(result),
       std::move(wallet_info));
 }
@@ -230,7 +233,7 @@ void LedgerClientMojoProxy::OnSavePublisherInfo(
     CallbackHolder<SavePublisherInfoCallback>* holder,
     ledger::Result result,
     std::unique_ptr<ledger::PublisherInfo> info) {
-  std::string json_info = info.get() ? info->ToJson() : "";
+  std::string json_info = info ? info->ToJson() : "";
   if (holder->is_valid())
     std::move(holder->get()).Run(ToMojomResult(result), json_info);
   delete holder;
@@ -242,8 +245,12 @@ void LedgerClientMojoProxy::SavePublisherInfo(
   // deleted in OnSavePublisherInfo
   auto* holder = new CallbackHolder<SavePublisherInfoCallback>(
       AsWeakPtr(), std::move(callback));
-  auto info = std::make_unique<ledger::PublisherInfo>();
-  info->loadFromJson(publisher_info);
+  std::unique_ptr<ledger::PublisherInfo> info;
+  if (!publisher_info.empty()) {
+    info.reset(new ledger::PublisherInfo());
+    info->loadFromJson(publisher_info);
+  }
+
   ledger_client_->SavePublisherInfo(std::move(info),
       std::bind(LedgerClientMojoProxy::OnSavePublisherInfo, holder, _1, _2));
 }
@@ -253,7 +260,7 @@ void LedgerClientMojoProxy::OnLoadPublisherInfo(
     CallbackHolder<LoadPublisherInfoCallback>* holder,
     ledger::Result result,
     std::unique_ptr<ledger::PublisherInfo> info) {
-  std::string json_info = info.get() ? info->ToJson() : "";
+  std::string json_info = info ? info->ToJson() : "";
   if (holder->is_valid())
     std::move(holder->get()).Run(ToMojomResult(result), json_info);
   delete holder;
@@ -305,7 +312,7 @@ void LedgerClientMojoProxy::OnLoadMediaPublisherInfo(
     CallbackHolder<LoadMediaPublisherInfoCallback>* holder,
     ledger::Result result,
     std::unique_ptr<ledger::PublisherInfo> info) {
-  std::string json_info = info.get() ? info->ToJson() : "";
+  std::string json_info = info ? info->ToJson() : "";
   if (holder->is_valid())
     std::move(holder->get()).Run(ToMojomResult(result), json_info);
   delete holder;
@@ -335,8 +342,11 @@ void LedgerClientMojoProxy::OnExcludedSitesChanged(
 
 void LedgerClientMojoProxy::OnPublisherActivity(int32_t result,
     const std::string& info, uint64_t window_id) {
-  auto publisher_info = std::make_unique<ledger::PublisherInfo>();
-  publisher_info->loadFromJson(info);
+  std::unique_ptr<ledger::PublisherInfo> publisher_info;
+  if (!info.empty()) {
+    publisher_info.reset(new ledger::PublisherInfo());
+    publisher_info->loadFromJson(info);
+  }
   ledger_client_->OnPublisherActivity(ToLedgerResult(result),
       std::move(publisher_info), window_id);
 }

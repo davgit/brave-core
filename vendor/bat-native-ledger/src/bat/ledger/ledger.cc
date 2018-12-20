@@ -166,9 +166,11 @@ bool PublisherInfoFilter::loadFromJson(const std::string& json) {
         d.HasMember("month") && d["month"].IsInt() &&
         d.HasMember("year") && d["year"].IsInt() &&
         d.HasMember("excluded") && d["excluded"].IsInt() &&
+        d.HasMember("percent") && d["percent"].IsUint() &&
         d.HasMember("order_by") && d["order_by"].IsObject() &&
         d.HasMember("min_duration") && d["min_duration"].IsUint64() &&
-        d.HasMember("reconcile_stamp") && d["reconcile_stamp"].IsUint64());
+        d.HasMember("reconcile_stamp") && d["reconcile_stamp"].IsUint64() &&
+        d.HasMember("non_verified") && d["non_verified"].IsBool());
   }
 
   if (false == error) {
@@ -177,8 +179,10 @@ bool PublisherInfoFilter::loadFromJson(const std::string& json) {
     month = (PUBLISHER_MONTH)d["month"].GetInt();
     year = d["year"].GetInt();
     excluded = (PUBLISHER_EXCLUDE_FILTER)d["excluded"].GetInt();
+    percent = d["percent"].GetUint();
     min_duration = d["min_duration"].GetUint64();
     reconcile_stamp = d["reconcile_stamp"].GetUint64();
+    non_verified = d["non_verified"].GetBool();
 
     for (const auto& i : d["order_by"].GetObject()) {
       order_by.push_back(std::make_pair(i.name.GetString(),
@@ -338,6 +342,7 @@ bool PublisherInfo::loadFromJson(const std::string& json) {
         d.HasMember("month") && d["month"].IsInt() &&
         d.HasMember("year") && d["year"].IsInt() &&
         d.HasMember("reconcile_stamp") && d["reconcile_stamp"].IsUint64() &&
+        d.HasMember("verified") && d["verified"].IsBool() &&
         d.HasMember("name") && d["name"].IsString() &&
         d.HasMember("url") && d["url"].IsString() &&
         d.HasMember("provider") && d["provider"].IsString() &&

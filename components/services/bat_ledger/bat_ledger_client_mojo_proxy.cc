@@ -96,7 +96,7 @@ void BatLedgerClientMojoProxy::OnWalletInitialized(ledger::Result result) {
 
 void BatLedgerClientMojoProxy::OnWalletProperties(ledger::Result result,
     std::unique_ptr<ledger::WalletInfo> info) {
-  std::string json_info = info.get() ? info->ToJson() : "";
+  std::string json_info = info ? info->ToJson() : "";
   bat_ledger_client_->OnWalletProperties(ToMojomResult(result), json_info);
 }
 
@@ -221,23 +221,29 @@ void BatLedgerClientMojoProxy::SavePublishersList(
 
 void OnSavePublisherInfo(const ledger::PublisherInfoCallback& callback,
     int32_t result, const std::string& publisher_info) {
-  auto info = std::make_unique<ledger::PublisherInfo>();
-  info->loadFromJson(publisher_info);
+  std::unique_ptr<ledger::PublisherInfo> info;
+  if (!publisher_info.empty()) {
+    info.reset(new ledger::PublisherInfo());
+    info->loadFromJson(publisher_info);
+  }
   callback(ToLedgerResult(result), std::move(info));
 }
 
 void BatLedgerClientMojoProxy::SavePublisherInfo(
     std::unique_ptr<ledger::PublisherInfo> publisher_info,
     ledger::PublisherInfoCallback callback) {
-  std::string json_info = publisher_info.get() ? publisher_info->ToJson() : "";
+  std::string json_info = publisher_info ? publisher_info->ToJson() : "";
   bat_ledger_client_->SavePublisherInfo(json_info,
       base::BindOnce(&OnSavePublisherInfo, std::move(callback)));
 }
 
 void OnLoadPublisherInfo(const ledger::PublisherInfoCallback& callback,
     int32_t result, const std::string& publisher_info) {
-  auto info = std::make_unique<ledger::PublisherInfo>();
-  info->loadFromJson(publisher_info);
+  std::unique_ptr<ledger::PublisherInfo> info;
+  if (!publisher_info.empty()) {
+    info.reset(new ledger::PublisherInfo());
+    info->loadFromJson(publisher_info);
+  }
   callback(ToLedgerResult(result), std::move(info));
 }
 
@@ -273,8 +279,11 @@ void BatLedgerClientMojoProxy::LoadPublisherInfoList(
 
 void OnLoadMediaPublisherInfo(const ledger::PublisherInfoCallback& callback,
     int32_t result, const std::string& publisher_info) {
-  auto info = std::make_unique<ledger::PublisherInfo>();
-  info->loadFromJson(publisher_info);
+  std::unique_ptr<ledger::PublisherInfo> info;
+  if (!publisher_info.empty()) {
+    info.reset(new ledger::PublisherInfo());
+    info->loadFromJson(publisher_info);
+  }
   callback(ToLedgerResult(result), std::move(info));
 }
 
@@ -298,7 +307,7 @@ void BatLedgerClientMojoProxy::OnExcludedSitesChanged(
 void BatLedgerClientMojoProxy::OnPublisherActivity(ledger::Result result,
     std::unique_ptr<ledger::PublisherInfo> info,
     uint64_t windowId) {
-  std::string json_info = info.get() ? info->ToJson() : "";
+  std::string json_info = info ? info->ToJson() : "";
   bat_ledger_client_->OnPublisherActivity(ToMojomResult(result),
       json_info, windowId);
 }

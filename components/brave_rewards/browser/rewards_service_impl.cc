@@ -856,11 +856,11 @@ void RewardsServiceImpl::OnPublisherInfoLoaded(
     const ledger::PublisherInfoList list) {
   if (list.size() == 0) {
     callback(ledger::Result::NOT_FOUND,
-        std::make_unique<ledger::PublisherInfo>());
+        std::unique_ptr<ledger::PublisherInfo>());
     return;
   } else if (list.size() > 1) {
     callback(ledger::Result::TOO_MANY_RESULTS,
-        std::make_unique<ledger::PublisherInfo>());
+        std::unique_ptr<ledger::PublisherInfo>());
     return;
   }
 
@@ -1453,8 +1453,11 @@ void RewardsServiceImpl::GetPublisherBanner(const std::string& publisher_id) {
 
 void RewardsServiceImpl::OnPublisherBannerMojoProxy(
     const std::string& banner) {
-  auto publisher_banner = std::make_unique<ledger::PublisherBanner>();
-  publisher_banner->loadFromJson(banner);
+  std::unique_ptr<ledger::PublisherBanner> publisher_banner;
+  if (!banner.empty()) {
+    publisher_banner.reset(new ledger::PublisherBanner());
+    publisher_banner->loadFromJson(banner);
+  }
   OnPublisherBanner(std::move(publisher_banner));
 }
 
@@ -1503,7 +1506,7 @@ void RewardsServiceImpl::OnDonate(const std::string& publisher_key, int amount,
     ledger::PUBLISHER_MONTH::ANY,
     -1);
 
-  bat_ledger_->DoDirectDonation(publisher_info->ToJson(), amount, "BAT");
+  bat_ledger_->DoDirectDonation(publisher.ToJson(), amount, "BAT");
 }
 
 bool SaveContributionInfoOnFileTaskRunner(const brave_rewards::ContributionInfo info,
