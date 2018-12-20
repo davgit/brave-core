@@ -8,6 +8,7 @@
 #include "brave/components/brave_rewards/browser/publisher_info_database.h"
 
 #include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -43,14 +44,23 @@ class PublisherInfoDatabaseTest : public ::testing::Test {
     // Code here will be called immediately after the constructor (right before
     // each test)
 
-    base::ScopedTempDir temp_dir_;
-    ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
+    base::ScopedTempDir temp_dir;
+    ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+    ASSERT_TRUE(base::DirectoryExists(temp_dir.GetPath()));
     base::FilePath db_file =
-      temp_dir_.GetPath().AppendASCII("PublisherInfoDatabaseTest.db");
+      temp_dir.GetPath().AppendASCII("PublisherInfoDatabaseTest.db");
 
-    publisher_info_database_ = std::make_unique<PublisherInfoDatabase>(db_file);
+    base::FilePath temp_file;
+    ASSERT_TRUE(
+        base::CreateTemporaryFileInDir(temp_dir.GetPath(), &temp_file));
+
+    LOG(ERROR) << db_file;
+    LOG(ERROR) << temp_file;
+
+    publisher_info_database_ = std::make_unique<PublisherInfoDatabase>(temp_file);
     ASSERT_NE(publisher_info_database_, nullptr);
-    ASSERT_EQ(GetDB().GetErrorCode(), SQLITE_OK);
+//    publisher_info_database_->Init();
+//    ASSERT_EQ(GetDB().GetErrorCode(), SQLITE_OK);
   }
 
   void TearDown() override {

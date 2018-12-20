@@ -37,15 +37,20 @@ PublisherInfoDatabase::~PublisherInfoDatabase() {
 }
 
 bool PublisherInfoDatabase::Init() {
+  LOG(ERROR) << "INIT 0";
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  LOG(ERROR) << "INIT 1";
 
   if (initialized_) {
     return true;
   }
+  LOG(ERROR) << "INIT 2" << db_path_;
 
   if (!db_.Open(db_path_)) {
     return false;
   }
+  LOG(ERROR) << "INIT 3";
 
   // TODO - add error delegate
   sql::Transaction committer(&db_);

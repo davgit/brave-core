@@ -82,11 +82,9 @@ class PublisherInfoDatabase {
 
   sql::Database& GetDB();
 
- private:
-  FRIEND_TEST_ALL_PREFIXES(PublisherInfoDatabaseTest,
-      Init);
-
   bool Init();
+
+ private:
 
   bool CreateContributionInfoTable();
 
@@ -106,9 +104,6 @@ class PublisherInfoDatabase {
 
   void OnMemoryPressure(
     base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level);
-
-
-
 
   sql::MetaTable& GetMetaTable();
 
