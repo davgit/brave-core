@@ -20,30 +20,40 @@ pipeline {
                     if [ ! -d brave-browser ]; then
                         git clone https://github.com/brave/brave-browser.git
                     else
-                        git -C brave-browser checkout -b ${GIT_BRANCH} || git -C brave-browser checkout ${GIT_BRANCH}
+                        git -C brave-browser checkout ${GIT_BRANCH} || git -C brave-browser checkout -b ${GIT_BRANCH}
                         git -C brave-browser clean -fxd
-                        git -C brave-browser fetch
                         git -C brave-browser pull origin ${GIT_BRANCH}
                     fi
                 """
             }
         }
-        stage('push') {
+        stage('config') {
             steps {
                 sh """
                     git config -f brave-browser/.git/config user.name brave-builds
                     git config -f brave-browser/.git/config user.email devops@brave.com
-
-                    jq "del(.config.projects[\\"brave-core\\"].branch) | .config.projects[\\"brave-core\\"].commit=\\"${GIT_COMMIT}\\"" brave-browser/package.json > brave-browser/package.json.new
-                    mv brave-browser/package.json.new brave-browser/package.json
-
                 """
+            }
+        }        
+        stage('pin') {
+            steps {
+                sh """
+                    jq "del(.config.projects[\\"brave-core\\"].branch) | .config.projects[\\"brave-core\\"].commit=\\"${GIT_COMMIT}\\"" brave-browser/package.json > brave-browser/package.json
+                """
+            }
+        }
+        stage('push') {
+            steps {
                 withCredentials([usernameColonPassword(credentialsId: 'brave-builds-github-token-for-pr-builder', variable: 'GITHUB_CREDENTIALS')]) {
                     sh "git -C brave-browser commit -a -m 'pin brave-core commit to ${GIT_BRANCH}' || exit 0"
                     sh "git -C brave-browser push https://${GITHUB_CREDENTIALS}@github.com/brave/brave-browser"
                 }
-                build "brave-browser-build-pr-mac/${GIT_BRANCH}"
             }
         }
+        stage('build') {
+            steps {
+                currentBuild.result = build "brave-browser-build-pr-mac/${GIT_BRANCH}", quietPeriod: 30
+            }
+        }        
     }
 }
