@@ -45,7 +45,6 @@ pipeline {
                     git -C brave-browser commit -a -m "pin brave-core commit to ${GIT_BRANCH}"
                     git -C brave-browser show
                     git -C brave-browser status
-                    // git -C brave-browser push https://${USERNAME}:${PASSWORD}@github.com/brave/brave-browser --all
                 """
             }
         }
