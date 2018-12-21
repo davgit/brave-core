@@ -36,8 +36,6 @@ pipeline {
                     mv brave-browser/package.json.new brave-browser/package.json
 
                     git -C brave-browser commit -a -m "pin brave-core commit to ${GIT_BRANCH}"
-                    git -C brave-browser show
-                    git -C brave-browser status
                 """
                 withCredentials([usernameColonPassword(credentialsId: 'brave-builds-github-token-for-pr-builder', variable: 'GITHUB_CREDENTIALS')]) {
                     sh "git -C brave-browser push https://${GITHUB_CREDENTIALS}@github.com/brave/brave-browser"
