@@ -22,7 +22,7 @@ pipeline {
         }
         stage('checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:brave/brave-browser.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/brave/brave-browser.git']]])
                 sh """
                     if [ ! -d brave-browser-temp ]; then
                         git clone https://github.com/brave/brave-browser.git
