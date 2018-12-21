@@ -19,6 +19,7 @@ pipeline {
                 sh 'git rev-parse HEAD'
                 sh "echo ${GIT_COMMIT}"
                 sh "echo ${GIT_BRANCH}"
+                sh "echo ${GIT_LOCAL_BRANCH}"
             }
         }
         stage('checkout') {
@@ -28,8 +29,7 @@ pipeline {
         }
         stage('push') {
             steps {
-                sh "sed -i s/master/${GIT_BRANCH}/g brave-browser/package.json"
-                sh "cat brave-browser/package.json"
+                sh "sed \"s/master/${GIT_BRANCH}/g\" brave-browser/package.json"
             }
         }        
     }
