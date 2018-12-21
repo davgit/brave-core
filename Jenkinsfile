@@ -21,7 +21,7 @@ pipeline {
                         git clone https://github.com/brave/brave-browser.git
                     else
                         git -C brave-browser checkout ${GIT_BRANCH} || git -C brave-browser checkout -b ${GIT_BRANCH}
-                        git -C brave-browser clean -fxd
+                        git -C brave-browser reset --hard HEAD
                         git -C brave-browser pull origin ${GIT_BRANCH}
                     fi
                 """
