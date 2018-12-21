@@ -41,6 +41,8 @@ pipeline {
                 withCredentials([usernameColonPassword(credentialsId: 'brave-builds-github-token-for-pr-builder', variable: 'GITHUB_CREDENTIALS')]) {
                     sh "git -C brave-browser push https://${GITHUB_CREDENTIALS}@github.com/brave/brave-browser"
                 }
+                // https://staging.ci.brave.com/view/ci/job/brave-browser-build-pr-mac/job/PR-1172/lastBuild/
+                build "brave-browser-build-pr-mac/${GIT_BRANCH}"
             }
         }
     }
