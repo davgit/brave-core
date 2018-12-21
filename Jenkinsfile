@@ -18,9 +18,15 @@ pipeline {
             steps {
                 sh 'git rev-parse HEAD'
                 sh "echo ${GIT_COMMIT}"
-                sh "git clone git@github.com:brave/brave-browser.git"
-                sh "cat brave-browser/package.json"
             }
         }
+        stage('checkout') {
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'brave-builds-github-token-for-pr-builder', url: 'git@github.com:brave/brave-browser.git']]])
+        }
+        stage('branch') {
+            steps {
+                sh "cat brave-browser/package.json"
+            }
+        }        
     }
 }
