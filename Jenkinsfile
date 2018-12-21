@@ -18,23 +18,17 @@ pipeline {
             steps {
                 sh 'git rev-parse HEAD'
                 sh "echo ${GIT_COMMIT}"
+                sh "echo ${GIT_BRANCH}"
             }
         }
         stage('checkout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/brave/brave-browser.git']]])
-                sh """
-                    if [ ! -d brave-browser-temp ]; then
-                        git clone https://github.com/brave/brave-browser.git
-                    else
-                        git -C brave-browser-temp checkout master
-                        git -C brave-browser-temp clean -fxd
-                    fi
-                """
             }
         }
         stage('push') {
             steps {
+                sh "sed -i s/master/${GIT_BRANCH}/g brave-browser/package.json"
                 sh "cat brave-browser/package.json"
             }
         }        
