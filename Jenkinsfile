@@ -36,12 +36,11 @@ pipeline {
                     jq "del(.config.projects[\\"brave-core\\"].branch) | .config.projects[\\"brave-core\\"].commit=\\"${GIT_COMMIT}\\"" brave-browser/package.json > brave-browser/package.json.new
                     mv brave-browser/package.json.new brave-browser/package.json
 
-                    git -C brave-browser commit -a -m "pin brave-core commit to ${GIT_BRANCH}"
                 """
                 withCredentials([usernameColonPassword(credentialsId: 'brave-builds-github-token-for-pr-builder', variable: 'GITHUB_CREDENTIALS')]) {
+                    sh "git -C brave-browser commit -a -m 'pin brave-core commit to ${GIT_BRANCH}' || exit 0"
                     sh "git -C brave-browser push https://${GITHUB_CREDENTIALS}@github.com/brave/brave-browser"
                 }
-                // https://staging.ci.brave.com/view/ci/job/brave-browser-build-pr-mac/job/PR-1172/lastBuild/
                 build "brave-browser-build-pr-mac/${GIT_BRANCH}"
             }
         }
