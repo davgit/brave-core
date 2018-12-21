@@ -22,13 +22,26 @@ pipeline {
         }
         stage('checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: "*/master"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/brave/brave-browser.git']]])
-                resolveScm source: github(repoOwner: 'brave', repository: 'brave-browser', traits: [[$class: 'org.jenkinsci.plugins.github_branch_source.BranchDiscoveryTrait', strategyId: 1], [$class: 'org.jenkinsci.plugins.github_branch_source.OriginPullRequestDiscoveryTrait', strategyId: 1], [$class: 'org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait', strategyId: 1, trust: [$class: 'TrustPermission']]]), targets: ["${GIT_BRANCH}"]
+                try {
+                    checkout([$class: 'GitSCM', branches: [[name: "*/${GIT_BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/brave/brave-browser.git']]])
+                }
+                catch (ex) {
+                    checkout([$class: 'GitSCM', branches: [[name: "*/master"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/brave/brave-browser.git']]])
+                    sh "git -C brave-browser checkout ${GIT_BRANCH}"
+                }
             }
         }
         stage('push') {
             steps {
-                sh "sed \"s/master/${GIT_BRANCH}/g\" brave-browser/package.json"
+                sh """
+                git config -f brave-browser/.git/config user.name brave-builds
+                git config -f brave-browser/.git/config user.email devops@brave.com
+                
+                sed -i \"s/master/${GIT_BRANCH}/g\" brave-browser/package.json
+                cat brave-browser/package.json
+
+                git -C brave-browser status
+                """
             }
         }        
     }
