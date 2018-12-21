@@ -36,6 +36,8 @@ pipeline {
         stage('push') {
             steps {
                 sh """
+                ls -la
+                ls -la brave-browser/
                 git config -f brave-browser/.git/config user.name brave-builds
                 git config -f brave-browser/.git/config user.email devops@brave.com
 
