@@ -147,6 +147,7 @@ class Banner extends React.Component<Props, State> {
         currentAmount={this.state.currentAmount}
         onClose={this.onClose}
         social={this.generateSocialLinks()}
+        addFundsLink={'brave://rewards/#add-funds'}
       >
         {description}
       </SiteBanner>
