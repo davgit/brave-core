@@ -21,9 +21,11 @@ pipeline {
             }
         }
         stage('checkout') {
-            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'brave-builds-github-token-for-pr-builder', url: 'git@github.com:brave/brave-browser.git']]])
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'brave-builds-github-token-for-pr-builder', url: 'git@github.com:brave/brave-browser.git']]])
+            }
         }
-        stage('branch') {
+        stage('push') {
             steps {
                 sh "cat brave-browser/package.json"
             }
