@@ -18,8 +18,6 @@ pipeline {
             steps {
                 sh "echo ${GIT_COMMIT}"
                 sh "echo ${GIT_BRANCH}"
-                sh "echo ${GIT_BRANCH_LOCAL}"
-                sh "echo ${GIT_LOCAL_BRANCH}"
             }
         }
         stage('checkout') {
