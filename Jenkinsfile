@@ -18,17 +18,18 @@ pipeline {
             steps {
                 sh "echo ${GIT_COMMIT}"
                 sh "echo ${GIT_BRANCH}"
+                sh "rm -rf brave-browser/"
             }
         }
         stage('checkout') {
             steps {
                 script {
                     try {
-                        checkout([$class: 'GitSCM', branches: [[name: "*/${GIT_BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/brave/brave-browser.git']]])
+                        checkout([$class: 'GitSCM', branches: [[name: "*/${GIT_BRANCH}"]], userRemoteConfigs: [[url: 'https://github.com/brave/brave-browser.git']]])
                     }
                     catch (ex) {
-                        checkout([$class: 'GitSCM', branches: [[name: "*/master"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/brave/brave-browser.git']]])
-                        sh "git -C brave-browser checkout ${GIT_BRANCH}"
+                        checkout([$class: 'GitSCM', branches: [[name: "*/master"]], userRemoteConfigs: [[url: 'https://github.com/brave/brave-browser.git']]])
+                        // sh "git -C brave-browser checkout ${GIT_BRANCH}"
                     }
                 }
             }
