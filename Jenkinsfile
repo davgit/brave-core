@@ -51,8 +51,7 @@ pipeline {
             }
         }
         stage('build') {
-            def r = build "brave-browser-build-pr-mac/${GIT_BRANCH}", quietPeriod: 30
-            currentBuild.result = r
+            build "brave-browser-build-pr-mac/${GIT_BRANCH}", quietPeriod: 30
         }        
     }
 }
