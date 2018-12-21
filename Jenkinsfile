@@ -18,7 +18,7 @@ pipeline {
             steps {
                 sh "echo ${GIT_COMMIT}"
                 sh "echo ${GIT_BRANCH}"
-                sh "rm -rf brave-browser/"
+                // sh "rm -rf brave-browser/"
             }
         }
         stage('checkout') {
@@ -36,19 +36,16 @@ pipeline {
         stage('push') {
             steps {
                 sh """
-                ls -la
-                ls -la brave-browser/
-                git config -f brave-browser/.git/config user.name brave-builds
-                git config -f brave-browser/.git/config user.email devops@brave.com
+                    git config -f brave-browser/.git/config user.name brave-builds
+                    git config -f brave-browser/.git/config user.email devops@brave.com
 
-                git config -f brave-browser/.git/config --list
+                    jq "del(.config.projects[\"brave-core\"].branch) | .config.projects[\"brave-core\"].commit=\"${GIT_COMMIT}}\"" brave-browser/package.json > brave-browser/package.json.new
+                    mv brave-browser/package.json.new brave-browser/package.json
 
-                git -C brave-browser status
-
-                sed -i \'s/master/${GIT_BRANCH}/g\' brave-browser/package.json
-                cat brave-browser/package.json
-
-                git -C brave-browser status
+                    git -C brave-browser commit -a -m "pin brave-core commit to ${GIT_BRANCH}"
+                    git -C brave-browser show
+                    git -C brave-browser status
+                    // git -C brave-browser push https://${USERNAME}:${PASSWORD}@github.com/brave/brave-browser --all
                 """
             }
         }
