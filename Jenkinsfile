@@ -11,8 +11,8 @@ pipeline {
             label 'darwin-ci'
         }
     }
-    environment {
-    }
+    // environment {
+    // }
     stages {
         stage('branch') {
             steps {
