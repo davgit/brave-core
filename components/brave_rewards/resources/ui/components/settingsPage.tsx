@@ -47,12 +47,13 @@ class SettingsPage extends React.Component<Props, {}> {
       this.actions.getWalletProperties()
     }, 60000)
 
-    this.actions.getGrant()
+    this.actions.getCurrentReport()
     this.actions.getDonationTable()
     this.actions.getContributeList()
-    this.actions.checkImported()
     this.actions.getAdsData()
-    this.actions.getCurrentReport()
+    this.actions.checkImported()
+    this.actions.getReconcileStamp()
+    this.actions.getGrant()
   }
 
   componentWillUnmount () {

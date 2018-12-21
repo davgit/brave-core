@@ -151,3 +151,5 @@ export const onAdsSettingSave = (key: string, value: any) => action(types.ON_ADS
   key,
   value
 })
+
+export const getReconcileStamp = () => action(types.GET_RECONCILE_STAMP)
