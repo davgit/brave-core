@@ -32,7 +32,7 @@ pipeline {
                     git config -f brave-browser/.git/config user.name brave-builds
                     git config -f brave-browser/.git/config user.email devops@brave.com
 
-                    jq 'del(.config.projects["brave-core"].branch) | .config.projects["brave-core"].commit="${GIT_COMMIT}"' brave-browser/package.json > brave-browser/package.json.new
+                    jq "del(.config.projects[\"brave-core\"].branch) | .config.projects[\"brave-core\"].commit=\"${GIT_COMMIT}\"" brave-browser/package.json > brave-browser/package.json.new
                     mv brave-browser/package.json.new brave-browser/package.json
 
                     git -C brave-browser commit -a -m "pin brave-core commit to ${GIT_BRANCH}"
