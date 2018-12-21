@@ -17,6 +17,9 @@ pipeline {
         stage('branch') {
             steps {
                 sh 'git rev-parse HEAD'
+                sh "echo ${GIT_COMMIT}"
+                sh "git clone git@github.com:brave/brave-browser.git"
+                sh "cat brave-browser/package.json"
             }
         }
     }
