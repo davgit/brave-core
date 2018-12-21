@@ -38,8 +38,12 @@ pipeline {
                 sh """
                 git config -f brave-browser/.git/config user.name brave-builds
                 git config -f brave-browser/.git/config user.email devops@brave.com
+
+                git config -f brave-browser/.git/config --list
+
+                git -C brave-browser status
                 
-                sed -i \"s/master/${GIT_BRANCH}/g\" brave-browser/package.json
+                sed -i \'s/master/${GIT_BRANCH}/g\' brave-browser/package.json
                 cat brave-browser/package.json
 
                 git -C brave-browser status
