@@ -53,8 +53,10 @@ pipeline {
         }
         stage('build') {
             steps {
-                build job: "brave-browser-build-pr-mac/${GIT_BRANCH}", quietPeriod: 30
-                currentBuild.result = 'UNSTABLE'
+                def r = build job: "brave-browser-build-pr-mac/${GIT_BRANCH}", quietPeriod: 30
+                script {
+                    currentBuild.result = 'UNSTABLE'
+                }
             }
         }        
     }
