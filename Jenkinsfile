@@ -54,8 +54,13 @@ pipeline {
         stage('build') {
             steps {
                 script {
-                    def r = build job: "brave-browser-build-pr-mac/${GIT_BRANCH}", propagate: false, quietPeriod: 30
-                    currentBuild.result = r.result
+                    def r = build(job: "brave-browser-build-pr-mac/${GIT_BRANCH}", propagate: false, quietPeriod: 30).result
+                    if(r == 'ABORTED') {
+                        currentBuild.result = 'FAILURE'
+                    }
+                    else {
+                        currentBuild.result = r
+                    }
                 }
             }
         }        
