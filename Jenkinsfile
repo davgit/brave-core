@@ -45,7 +45,7 @@ pipeline {
         stage('push') {
             steps {
                 withCredentials([usernameColonPassword(credentialsId: 'brave-builds-github-token-for-pr-builder', variable: 'GITHUB_CREDENTIALS')]) {
-                    sh "git -C brave-browser commit -a -m 'pin brave-core commit to ${GIT_BRANCH}' || exit 0"
+                    sh "git -C brave-browser commit -a -m 'pin brave-core to ${GIT_COMMIT} from ${GIT_BRANCH}' || exit 0"
                     sh "git -C brave-browser push https://${GITHUB_CREDENTIALS}@github.com/brave/brave-browser"
                 }
             }
@@ -53,7 +53,7 @@ pipeline {
         stage('build') {
             steps {
                 script {
-                    def r = build job: "brave-browser-build-pr-mac/${GIT_BRANCH}", quietPeriod: 30
+                    def r = build job: "brave-browser-build-pr-mac/${GIT_BRANCH}", propagate: false, quietPeriod: 30
                     currentBuild.result = 'UNSTABLE'
                 }
             }
