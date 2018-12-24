@@ -38,7 +38,8 @@ pipeline {
         stage('pin') {
             steps {
                 sh """
-                    jq "del(.config.projects[\\"brave-core\\"].branch) | .config.projects[\\"brave-core\\"].commit=\\"${GIT_COMMIT}\\"" brave-browser/package.json > brave-browser/package.json
+                    jq "del(.config.projects[\\"brave-core\\"].branch) | .config.projects[\\"brave-core\\"].commit=\\"${GIT_COMMIT}\\"" brave-browser/package.json > brave-browser/package.json.new
+                    mv brave-browser/package.json.new brave-browser/package.json
                 """
             }
         }
@@ -53,6 +54,7 @@ pipeline {
         stage('build') {
             steps {
                 build job: "brave-browser-build-pr-mac/${GIT_BRANCH}", quietPeriod: 30
+                currentBuild.result = 'UNSTABLE'
             }
         }        
     }
