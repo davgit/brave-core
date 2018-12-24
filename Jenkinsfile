@@ -21,7 +21,7 @@ pipeline {
                         git clone https://github.com/brave/brave-browser.git
                     else
                         git -C brave-browser checkout -b ${GIT_BRANCH} || git -C brave-browser checkout ${GIT_BRANCH}
-                        git -C brave-browser fetch
+                        git -C brave-browser fetch origin ${GIT_BRANCH}
                         git -C brave-browser reset --hard origin/${GIT_BRANCH}
                     fi
                 """
@@ -55,7 +55,7 @@ pipeline {
             steps {
                 script {
                     def r = build job: "brave-browser-build-pr-mac/${GIT_BRANCH}", propagate: false, quietPeriod: 30
-                    currentBuild.result = 'UNSTABLE'
+                    currentBuild.result = r.result
                 }
             }
         }        
